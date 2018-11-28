@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="线性代数,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="最近入坑机器学习，线性代数的知识用到很多，所以就回顾了一下，发现也是挺有意思的。行列式对于方阵给出一个特殊的定义值，与方阵的秩和方阵对应的齐次线性方程有没有唯一非零解有着很大的关系。 定义当$n\geq2$时，$n\times n$矩阵$A=\begin{bmatrix}a_{ij}\end{bmatrix}$的行列式是形如$\pm a_{ij} detA_{ij}$的n个项的和，其中加减号交替出">
+<meta name="keywords" content="线性代数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="jiaxinhuang.github.io/2018/11/28/post/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="最近入坑机器学习，线性代数的知识用到很多，所以就回顾了一下，发现也是挺有意思的。行列式对于方阵给出一个特殊的定义值，与方阵的秩和方阵对应的齐次线性方程有没有唯一非零解有着很大的关系。 定义当$n\geq2$时，$n\times n$矩阵$A=\begin{bmatrix}a_{ij}\end{bmatrix}$的行列式是形如$\pm a_{ij} detA_{ij}$的n个项的和，其中加减号交替出">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-28T04:33:40.064Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="最近入坑机器学习，线性代数的知识用到很多，所以就回顾了一下，发现也是挺有意思的。行列式对于方阵给出一个特殊的定义值，与方阵的秩和方阵对应的齐次线性方程有没有唯一非零解有着很大的关系。 定义当$n\geq2$时，$n\times n$矩阵$A=\begin{bmatrix}a_{ij}\end{bmatrix}$的行列式是形如$\pm a_{ij} detA_{ij}$的n个项的和，其中加减号交替出">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="jiaxinhuang.github.io/2018/11/28/post/">
+
+
+
+
+
+  <title> | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="jiaxinhuang.github.io/2018/11/28/post/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="黄佳新">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-28T11:24:25+08:00">
+                2018-11-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近入坑机器学习，线性代数的知识用到很多，所以就回顾了一下，发现也是挺有意思的。<br>行列式对于方阵给出一个特殊的定义值，与方阵的秩和方阵对应的齐次线性方程有没有唯一非零解有着很大的关系。</p>
+<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>当$n\geq2$时，$n\times n$矩阵$A=\begin{bmatrix}a_{ij}\end{bmatrix}$的行列式是形如$\pm a_{ij} detA_{ij}$的n个项的和，其中加减号交替出现，这里的$a_{11},a_{12},a_{13}…a_{1n}$来自于第一行，即</p>
+<script type="math/tex; mode=display">\begin{aligned}
+detA&=a_{11}\cdot detA_{11}-a_{12}\cdot detA_{12}+\cdots +(-1)^{1+n}a_{1n}detA_{1n}\\
+&=\sum_{j=1}^{n}(-1)^{1+j}a_{1j}detA_{1j}\\
+\end{aligned}</script><p>当然这是针对第一行展开的，从中可以看出$n\times n$阶的行列式被展开成若干个$(n-1)\times(n-1)$阶的行列式。$detA_{1j}$称为代数余子式，是划掉行列式A的第$1$行第$j$列后余下行列式的值，也可以对第$i$行进行展开，$1$替换成$i$即可。同样地，也可以对某一列进行展开。</p>
+<h4 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h4><ol>
+<li>若$A$为三角阵，则$detA$为主对角线上元素乘积。这里的三角阵仅考虑行列式主对角线上边或下边元素全为零的情况。</li>
+<li><p>行变换性质。令$A$是一个方阵，则有</p>
+<ul>
+<li>若$A$的一行加上另一行的倍数得到$B$，则$detA=detB$ </li>
+<li>若$A$的两行互换得到$B$，则$detA=-detB$</li>
+<li>若$A$的某行乘以k得到$B$，则$detA=kdetB$</li>
+<li>$A$中有任何一行为0，则$detA=0$</li>
+</ul>
+<p>实际上，列变换也具有这些性质<br>通过行列式的行变换，可以将一个复杂的行列式化简成三角型，如果化成阶梯型后不是三角型，则说明行列式值为0。</p>
+<ol>
+<li>当且仅当$detA\neq 0$时方阵$A$是可逆的</li>
+<li>若$A$为一个$n\times n$矩阵，则$detA^T=detA$</li>
+<li>乘法性质。$det(AB)=(detA)(detB)$</li>
+</ol>
+</li>
+</ol>
+<h4 id="线性方程组的解集问题"><a href="#线性方程组的解集问题" class="headerlink" title="线性方程组的解集问题"></a>线性方程组的解集问题</h4><ul>
+<li>齐次线性方程组的解集<ul>
+<li>首先说一下什么是齐次线性方程组。就是方程组可以写成$A\textbf x=\textbf 0$，$A$是系数矩阵($m\times n$阶)，$\textbf x$是未知数n维列向量。显然这个方程必然有零解($x_1=0,x_2=0\cdots x_n=0$)。</li>
+<li>有没有非零解，取决于方程组有没有自由变量。如果系数矩阵的行秩$\geq$未知数个数n（事实上只能$=$，因为任何矩阵行秩$=$列秩$=$秩），也就是线性无关的有效方程的个数$=$未知数个数n，方程只有零解。如果小于，则$n-$行秩就是方程组自有变量的个数。如果$x_1,x_2$是自有变量的话，那么通解为$\textbf x=x_1\textbf u+x_2\textbf v$，$\textbf u,\textbf v$为由方程解出来的列向量。</li>
+</ul>
+</li>
+<li>非齐次线性方程的解集<ul>
+<li>非齐次线性方程组是为$A\textbf x=\textbf b$的形式，$\textbf b$为n维非$0$列向量。它的解有三种情况，由增广矩阵<br>$\begin{bmatrix}A&amp;\textbf b\end{bmatrix}$与系数矩阵$A$的秩的关系决定。若$r_{系数矩阵}=r_{增广矩阵}=n$，则有唯一解；若$r_{系数矩阵}=r_{增广矩阵}&lt;n$,则有无穷解。若$r_{系数矩阵}\neq r_{增广矩阵}$，则无解。（其中n为未知数的个数）。$r_{系数矩阵}\neq r_{增广矩阵}$反映了给定的线性方程组有互相矛盾的情况，其差为矛盾线性方程的个数；若$r_{系数矩阵}=r_{增广矩阵}&lt;n$，则说明给定的线性无关方程的个数小于未知变量个数，自然会有无穷多个解。<ul>
+<li>如果非齐次线性方程组有解，且p是一个特解，则$A\textbf x=\textbf b$的解集所有形如$\textbf w=\textbf p+\textbf v_{h}$，其中$\textbf v_{h}$是齐次线性方程组$A\textbf x=\textbf 0$的通解。<h4 id="克拉默法则"><a href="#克拉默法则" class="headerlink" title="克拉默法则"></a>克拉默法则</h4>克拉默法则是用来求解系数矩阵为方阵且可逆的非齐次线性方程组的唯一解的定理。首先定义一个替换矩阵，对于任意$n\times n$矩阵$A$和任意$\mathbb{R^{n}}$中向量$\textbf b$，令${A_i(b)}$表示$A$中第i列由向量$b$替换得到的矩阵。即</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">{A_i(b)=}\begin{bmatrix} {a_1}& \cdots &{b}  &\cdots  &{a_n} \end{bmatrix}</script><p>接下来正式说明一下什么是克拉默法则<br>设$ A$是一个可逆的$n\times n$矩阵，对任意$\mathbb{R^{n}}$中向量$ b$，方程${Ax=b}$的唯一解可由下式给出，</p>
+<script type="math/tex; mode=display">{x_i=\frac{detA_ib}{detA},i=1,2\cdots n}</script><p>$detA\neq 0$再加上$n\times n$方阵的条件可以说明$r_{系数矩阵}=r_{增广矩阵}=n$</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/线性代数/" rel="tag"># 线性代数</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/28/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">黄佳新</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#定理"><span class="nav-number">2.</span> <span class="nav-text">定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#线性方程组的解集问题"><span class="nav-number">3.</span> <span class="nav-text">线性方程组的解集问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#克拉默法则"><span class="nav-number">4.</span> <span class="nav-text">克拉默法则</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">黄佳新</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
