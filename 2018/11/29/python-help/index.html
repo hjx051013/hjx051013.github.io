@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="python使用,">
 
 
 
@@ -88,17 +88,18 @@
 
 
 
-<meta name="description" content="选择，机会，勤奋，积极">
-<meta name="keywords" content="爱我所爱">
-<meta property="og:type" content="website">
-<meta property="og:title" content="追风少年">
-<meta property="og:url" content="hjx051013.github.io/archives/2018/11/index.html">
+<meta name="description" content="python的一个优势是有着大量自带和在线的模块(module)资源，可以提供丰富的功能，在使用这些模块的时候，如果每次都去网站找在线文档会过于耗费时间，结果也不一定准确。因此这里介绍下python自带的查看帮助功能，可以在编程时不中断地迅速找到所需模块和函数的使用方法。 通用帮助函数help()在python命令行中键入help(),可以看到：1234567891011121314151617&amp;">
+<meta name="keywords" content="python使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python在命令行下查看模块，函数的用法">
+<meta property="og:url" content="hjx051013.github.io/2018/11/29/python-help/index.html">
 <meta property="og:site_name" content="追风少年">
-<meta property="og:description" content="选择，机会，勤奋，积极">
+<meta property="og:description" content="python的一个优势是有着大量自带和在线的模块(module)资源，可以提供丰富的功能，在使用这些模块的时候，如果每次都去网站找在线文档会过于耗费时间，结果也不一定准确。因此这里介绍下python自带的查看帮助功能，可以在编程时不中断地迅速找到所需模块和函数的使用方法。 通用帮助函数help()在python命令行中键入help(),可以看到：1234567891011121314151617&amp;">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-29T15:22:15.773Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="追风少年">
-<meta name="twitter:description" content="选择，机会，勤奋，积极">
+<meta name="twitter:title" content="python在命令行下查看模块，函数的用法">
+<meta name="twitter:description" content="python的一个优势是有着大量自带和在线的模块(module)资源，可以提供丰富的功能，在使用这些模块的时候，如果每次都去网站找在线文档会过于耗费时间，结果也不一定准确。因此这里介绍下python自带的查看帮助功能，可以在编程时不中断地迅速找到所需模块和函数的使用方法。 通用帮助函数help()在python命令行中键入help(),可以看到：1234567891011121314151617&amp;">
 
 
 
@@ -128,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="hjx051013.github.io/archives/2018/11/">
+  <link rel="canonical" href="hjx051013.github.io/2018/11/29/python-help/">
 
 
 
 
 
-  <title>归档 | 追风少年</title>
+  <title>python在命令行下查看模块，函数的用法 | 追风少年</title>
   
 
 
@@ -153,7 +154,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband">
       <a href="https://github.com/hjx051013" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
     </div>
@@ -281,142 +282,234 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hjx051013.github.io/2018/11/29/python-help/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jiaxinhuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追风少年">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">python在命令行下查看模块，函数的用法</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-29T23:07:06+08:00">
+                2018-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 3 篇日志。 继续努力。
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
+             <span id="/2018/11/29/python-help/" class="leancloud_visitors" data-flag-title="python在命令行下查看模块，函数的用法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                <span>℃</span>
+             </span>
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/11/29/python-help/" itemprop="url">
+          
+
+          
+            <div class="post-wordcount">
               
-                <span itemprop="name">python在命令行下查看模块，函数的用法</span>
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  919
+                </span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-29T23:07:06+08:00" content="2018-11-29">
-          11-29
-        </time>
-      </div>
+              
+                <span class="post-meta-divider">|</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
 
+          
 
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/11/29/python-lambda/" itemprop="url">
-              
-                <span itemprop="name">python中的lambda表达式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-29T22:29:38+08:00" content="2018-11-29">
-          11-29
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/11/28/post/" itemprop="url">
-              
-                <span itemprop="name">线性代数行列式总结</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-28T11:24:25+08:00" content="2018-11-28">
-          11-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>python的一个优势是有着大量自带和在线的模块(module)资源，可以提供丰富的功能，在使用这些模块的时候，如果每次都去网站找在线文档会过于耗费时间，结果也不一定准确。因此这里介绍下python自带的查看帮助功能，可以在编程时不中断地迅速找到所需模块和函数的使用方法。</p>
+<h3 id="通用帮助函数help"><a href="#通用帮助函数help" class="headerlink" title="通用帮助函数help()"></a>通用帮助函数help()</h3><p>在python命令行中键入help(),可以看到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; help()</span><br><span class="line"></span><br><span class="line">Welcome to Python 3.5&apos;s help utility!</span><br><span class="line"></span><br><span class="line">If this is your first time using Python, you should definitely check out</span><br><span class="line">the tutorial on the Internet at http://docs.python.org/3.5/tutorial/.</span><br><span class="line"></span><br><span class="line">Enter the name of any module, keyword, or topic to get help on writing</span><br><span class="line">Python programs and using Python modules.  To quit this help utility and</span><br><span class="line">return to the interpreter, just type &quot;quit&quot;.</span><br><span class="line"></span><br><span class="line">To get a list of available modules, keywords, symbols, or topics, type</span><br><span class="line">&quot;modules&quot;, &quot;keywords&quot;, &quot;symbols&quot;, or &quot;topics&quot;.  Each module also comes</span><br><span class="line">with a one-line summary of what it does; to list the modules whose name</span><br><span class="line">or summary contain a given string such as &quot;spam&quot;, type &quot;modules spam&quot;.</span><br><span class="line"></span><br><span class="line">help&gt;</span><br></pre></td></tr></table></figure></p>
+<p>进入help帮助文档界面，根据屏幕提示可以继续键入相应关键词进行查询，继续键入modules可以列出当前所有安装的模块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">help&gt; modules</span><br><span class="line"></span><br><span class="line">Please wait a moment while I gather a list of all available modules...</span><br><span class="line"></span><br><span class="line">AutoComplete        _pyio               filecmp             pyscreeze</span><br><span class="line">AutoCompleteWindow  _random             fileinput           pytweening</span><br><span class="line">......        </span><br><span class="line"></span><br><span class="line">Enter any module name to get more help.  Or, type &quot;modules spam&quot; to search</span><br><span class="line">for modules whose name or summary contain the string &quot;spam&quot;.</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>可以继续键入相应的模块名称得到该模块的帮助信息。<br>这是python的通用的查询帮助，可以查到几乎所有的帮助文档，但我们很多时候不需要这样层级式地向下查询，接下来会介绍如何直接查询特定的模块和函数帮助信息。</p>
+</blockquote>
+<h3 id="模块帮助查询"><a href="#模块帮助查询" class="headerlink" title="模块帮助查询"></a>模块帮助查询</h3><h4 id="查看-py结尾的普通模块help-module-name"><a href="#查看-py结尾的普通模块help-module-name" class="headerlink" title="查看.py结尾的普通模块help(module_name)"></a>查看.py结尾的普通模块help(module_name)</h4><p>例如要查询math模块的使用方法，可以如下操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import math</span><br><span class="line">&gt;&gt;&gt; help(math)</span><br><span class="line">Help on built-in module math:</span><br><span class="line"></span><br><span class="line">NAME</span><br><span class="line">    math</span><br><span class="line"></span><br><span class="line">DESCRIPTION</span><br><span class="line">    This module is always available.  It provides access to the</span><br><span class="line">    mathematical functions defined by the C standard.</span><br><span class="line"></span><br><span class="line">FUNCTIONS</span><br><span class="line">    acos(...)</span><br><span class="line">        acos(x)</span><br><span class="line"></span><br><span class="line">        Return the arc cosine (measured in radians) of x.</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>使用help(module_name)时首先需要import该模块，有些教程中不进行导入而在模块名中加入引号help(‘module_name’)，这种方法可能会带来问题，大家可以用math模块测试，建议使用先导入再使用help()函数查询。</p>
+<h4 id="查看内建模块sys-bultin-modulenames"><a href="#查看内建模块sys-bultin-modulenames" class="headerlink" title="查看内建模块sys.bultin_modulenames"></a>查看内建模块sys.bultin_modulenames</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.builtin_module_names</span><br><span class="line">(&apos;_ast&apos;, &apos;_bisect&apos;, &apos;_codecs&apos;, &apos;_codecs_cn&apos;, &apos;_codecs_hk&apos;, ... &apos;zlib&apos;)</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>需要导入sys模块。这里列举的一般是自带的使用C/C++编译链接的模块</p>
+</blockquote>
+<h3 id="查询函数信息"><a href="#查询函数信息" class="headerlink" title="查询函数信息"></a>查询函数信息</h3><h4 id="查看模块下所有函数dir-module-name"><a href="#查看模块下所有函数dir-module-name" class="headerlink" title="查看模块下所有函数dir(module_name)"></a>查看模块下所有函数dir(module_name)</h4><p>如我们需要列举出math模块下所有的函数名称<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; dir(math)</span><br><span class="line">[&apos;__doc__&apos;, &apos;__loader__&apos;, &apos;__name__&apos;,...]</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>同样需要首先导入该模块</p>
+<h4 id="查看模块下特定函数信息help-module-name-func-name"><a href="#查看模块下特定函数信息help-module-name-func-name" class="headerlink" title="查看模块下特定函数信息help(module_name.func_name)"></a>查看模块下特定函数信息help(module_name.func_name)</h4><p>如查看math下的sin()函数</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; help(math.sin)</span><br><span class="line">Help on built-in function sin in module math:</span><br><span class="line"></span><br><span class="line">sin(...)</span><br><span class="line">    sin(x)</span><br><span class="line"></span><br><span class="line">    Return the sine of x (measured in radians).</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="查看函数信息的另一种方法print-func-name-doc"><a href="#查看函数信息的另一种方法print-func-name-doc" class="headerlink" title="查看函数信息的另一种方法print(func_name.doc)"></a>查看函数信息的另一种方法print(func_name.<strong>doc</strong>)</h4><p>如查看内建函数print用法。既可以用来查看内建函数，也可以查看模块函数信息。</p>
+<figure class="highlight plain"><figcaption><span>print(print.__doc__)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">print(value, ..., sep=&apos; &apos;, end=&apos;\n&apos;, file=sys.stdout, flush=False)</span><br><span class="line"></span><br><span class="line">Prints the values to a stream, or to sys.stdout by default.</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>doc</strong>前后是两个短下划线，在python中会合并为长下划线<br>python中的help()类似unix中的man指令，熟悉后会对我们的编程带来很大帮助</p>
+</blockquote>
 
       
-
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python使用/" rel="tag"><i class="fa fa-tag"></i> python使用</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/29/python-lambda/" rel="next" title="python中的lambda表达式">
+                <i class="fa fa-chevron-left"></i> python中的lambda表达式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -424,6 +517,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -444,8 +541,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -536,6 +642,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#通用帮助函数help"><span class="nav-number">1.</span> <span class="nav-text">通用帮助函数help()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模块帮助查询"><span class="nav-number">2.</span> <span class="nav-text">模块帮助查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看-py结尾的普通模块help-module-name"><span class="nav-number">2.1.</span> <span class="nav-text">查看.py结尾的普通模块help(module_name)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看内建模块sys-bultin-modulenames"><span class="nav-number">2.2.</span> <span class="nav-text">查看内建模块sys.bultin_modulenames</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询函数信息"><span class="nav-number">3.</span> <span class="nav-text">查询函数信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看模块下所有函数dir-module-name"><span class="nav-number">3.1.</span> <span class="nav-text">查看模块下所有函数dir(module_name)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看模块下特定函数信息help-module-name-func-name"><span class="nav-number">3.2.</span> <span class="nav-text">查看模块下特定函数信息help(module_name.func_name)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看函数信息的另一种方法print-func-name-doc"><span class="nav-number">3.3.</span> <span class="nav-text">查看函数信息的另一种方法print(func_name.doc)</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -711,6 +833,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
