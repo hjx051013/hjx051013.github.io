@@ -296,6 +296,203 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hjx051013.github.io/2018/12/08/python-passParam/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jiaxinhuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追风少年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/08/python-passParam/" itemprop="url">python传递参数究竟是值传递还是引用传递</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-08T15:57:27+08:00">
+                2018-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/12/08/python-passParam/" class="leancloud_visitors" data-flag-title="python传递参数究竟是值传递还是引用传递">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                <span>℃</span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  876
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先还是应该科普下函数参数传递机制，传值和传引用是什么意思？</p>
+<p>　　 函数参数传递机制问题在本质上是调用函数（过程）和被调用函数（过程）在调用发生时进行通信的方法问题。基本的参数传递机制有两种：值传递和引用传递。</p>
+<p>　　值传递（passl-by-value）过程中，被调函数的形式参数作为被调函数的局部变量处理，即在堆栈中开辟了内存空间以存放由主调函数放进来的实参的值，从而成为了实参的一个副本。值传递的特点是被调函数对形式参数的任何操作都是作为局部变量进行，不会影响主调函数的实参变量的值。</p>
+<p>　　引用传递(pass-by-reference)过程中，被调函数的形式参数虽然也作为局部变量在堆栈中开辟了内存空间，但是这时存放的是由主调函数放进来的实参变量的地址。被调函数对形参的任何操作都被处理成间接寻址，即通过堆栈中存放的地址访问主调函数中的实参变量。正因为如此，被调函数对形参做的任何操作都影响了主调函数中的实参变量。</p>
+<p>那么,python究竟是怎样的呢</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> os.path  </span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(c)</span>:</span></span><br><span class="line">    print(<span class="string">"test before "</span>)</span><br><span class="line">    print(id(c))</span><br><span class="line">    c+=<span class="number">2</span></span><br><span class="line">    print(<span class="string">"test after"</span>)</span><br><span class="line">    print(id(c))</span><br><span class="line">    <span class="keyword">return</span> c</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printIt</span><span class="params">(t)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(t)):</span><br><span class="line">        print(t[i])</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</span><br><span class="line">    a=<span class="number">2</span></span><br><span class="line">    print(<span class="string">"main before invoke test"</span>)</span><br><span class="line">    print(id(a))</span><br><span class="line">    n=test(a)</span><br><span class="line">    print(<span class="string">"main afterf invoke test"</span>)</span><br><span class="line">    print(a)</span><br><span class="line">    print(id(a))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">main before invoke test</span><br><span class="line">test before </span><br><span class="line">test after +</span><br><span class="line">main afterf invoke test</span><br><span class="line">39601564</span><br></pre></td></tr></table></figure>
+<p>从上可以看出，传参数进去时，传得是引用，因为参数地址没变。但是对传入参数赋值后，其地址就发生了变化。基于这个例子画了个图表示</p>
+<p><img src="http://hjx-markdown-images.test.upcdn.net/2018/12/08/5c76d4645b932a417ded382c0ec1e38d.jpg" alt="849009-20160314194651474-1039918478.jpg"></p>
+<p>那么python传递参数传得真是引用，然后传参的值在被调函数内被修改也不影响主调函数的实参变量的值？有传入对象可变与不可变的说法，<br>对于可变对象，在被调函数内修改传参会影响主调函数的实参变量，对于不可变对象修改传参则不会改变主调函数实参的值，因为修改不可变对象<br>实际上是另开辟内存重新赋值并让传参变量指向该内存。看下面例子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> os.path  </span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(list2)</span>:</span></span><br><span class="line">    print(<span class="string">"test before "</span>)</span><br><span class="line">    print(id(list2))</span><br><span class="line">    list2[<span class="number">1</span>]=<span class="number">30</span></span><br><span class="line">    print(<span class="string">"test after +"</span>)</span><br><span class="line">    print(id(list2))</span><br><span class="line">    <span class="keyword">return</span> list2</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">printIt</span><span class="params">(t)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(t)):</span><br><span class="line">        print(t[i])</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">"__main__"</span>:</span><br><span class="line">    list1=[<span class="string">"loleina"</span>,<span class="number">25</span>,<span class="string">'female'</span>]</span><br><span class="line">    print(<span class="string">"main before invoke test"</span>)</span><br><span class="line">    print(id(list1))</span><br><span class="line">    list3=test(list1)</span><br><span class="line">    print(<span class="string">"main afterf invoke test"</span>)</span><br><span class="line">    print(list1)</span><br><span class="line">    print(id(list1))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">main before invoke test</span><br><span class="line">4485568072</span><br><span class="line">test before </span><br><span class="line">4485568072</span><br><span class="line">test after +</span><br><span class="line">4485568072</span><br><span class="line">main afterf invoke test</span><br><span class="line">[&apos;loleina&apos;, 30, &apos;female&apos;]</span><br><span class="line">4485568072</span><br></pre></td></tr></table></figure>
+<p>结论：python不允许程序员选择采用传值还是传引用。Python参数传递采用的肯定是“传对象引用”的方式。这种方式相当于传值和传引用的一种综合。如果函数收到的是一个可变对象（比如<strong>字典或者列表</strong>）的引用，就能修改对象的原始值－－相当于通过“传引用”来传递对象。如果函数收到的是一个不可变对象（比如<strong>数字、字符或者元组</strong>）的引用，就不能直接修改原始对象－－相当于通过“传值’来传递对象。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="hjx051013.github.io/2018/11/29/python-help/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -991,7 +1188,7 @@ detA&=a_{11}\cdot detA_{11}-a_{12}\cdot detA_{12}+\cdots +(-1)^{1+n}a_{1n}detA_{
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1013,7 +1210,7 @@ detA&=a_{11}\cdot detA_{11}-a_{12}\cdot detA_{12}+\cdots +(-1)^{1+n}a_{1n}detA_{
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1094,7 +1291,7 @@ detA&=a_{11}\cdot detA_{11}-a_{12}\cdot detA_{12}+\cdots +(-1)^{1+n}a_{1n}detA_{
     
       <span class="post-meta-item-text">站点共计字数&#58;</span>
     
-    <span title="Site words total count">3.4k</span>
+    <span title="Site words total count">4.3k</span>
   
   
   
