@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="hjx051013.github.io/"/>
-  <updated>2018-12-10T07:49:04.020Z</updated>
+  <updated>2019-05-29T13:54:02.781Z</updated>
   <id>hjx051013.github.io/</id>
   
   <author>
@@ -15,6 +15,45 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Makefile赋值符辨析.md</title>
+    <link href="hjx051013.github.io/2019/05/29/Makefile%E8%B5%8B%E5%80%BC%E7%AC%A6%E8%BE%A8%E6%9E%90/"/>
+    <id>hjx051013.github.io/2019/05/29/Makefile赋值符辨析/</id>
+    <published>2019-05-29T13:49:16.000Z</published>
+    <updated>2019-05-29T13:54:02.781Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Makefile-中-的区别"><a href="#Makefile-中-的区别" class="headerlink" title="Makefile 中:= ?= += =的区别"></a>Makefile 中:= ?= += =的区别</h2><p>在Makefile中我们经常看到 = := ?= +=这几个赋值运算符，那么他们有什么区别呢？我们来做个简单的实验</p><p>新建一个Makefile，内容为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ifdef DEFINE_VRE</span><br><span class="line">    VRE = “Hello World!”</span><br><span class="line">else</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">ifeq ($(OPT),define)</span><br><span class="line">    VRE ?= “Hello World! First!”</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">ifeq ($(OPT),add)</span><br><span class="line">    VRE += “Kelly!”</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">ifeq ($(OPT),recover)</span><br><span class="line">    VRE := “Hello World! Again!”</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">all:</span><br><span class="line">    @echo $(VRE)</span><br></pre></td></tr></table></figure></p><p>敲入以下make命令：</p><p>make DEFINE_VRE=true OPT=define 输出：Hello World!<br>make DEFINE_VRE=true OPT=add 输出：Hello World! Kelly!<br>make DEFINE_VRE=true OPT=recover  输出：Hello World! Again!<br>make DEFINE_VRE= OPT=define 输出：Hello World! First!<br>make DEFINE_VRE= OPT=add 输出：Kelly!<br>make DEFINE_VRE= OPT=recover 输出：Hello World! Again!</p><p>从上面的结果中我们可以清楚的看到他们的区别了</p><ul><li>= 是最基本的赋值</li><li>:= 是覆盖之前的值</li><li>?= 是如果没有被赋值过就赋予等号后面的值</li><li>+= 是添加等号后面的值</li></ul><p>之前一直纠结makefile中“=”和“:=”的区别到底有什么区别，因为给变量赋值时，两个符号都在使用。网上搜了一下，有人给出了解答，但是本人愚钝，看不懂什么意思。几寻无果之下，也就放下了。今天看一篇博客，无意中发现作者对于这个问题做了很好的解答。解决问题之余不免感叹，有时候给个例子不就清楚了吗？为什么非要说得那么学术呢。^_^</p><ol><li>“=”</li></ol><p>make会将整个makefile展开后，再决定变量的值。也就是说，变量的值将会是整个makefile中最后被指定的值。看例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x = foo</span><br><span class="line">y = $(x) bar</span><br><span class="line">x = xyz</span><br></pre></td></tr></table></figure></p><p>在上例中，y的值将会是 <code>xyz bar</code> ，而不是 <code>foo bar</code> 。</p><ol><li>“:=”</li></ol><p>“:=”表示变量的值决定于它在makefile中的位置，而不是整个makefile展开后的最终值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x := foo</span><br><span class="line">y := $(x) bar</span><br><span class="line">x := xyz</span><br></pre></td></tr></table></figure></p><p>在上例中，y的值将会是 <code>foo bar</code> ，而不是 <code>xyz bar</code>了。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;Makefile-中-的区别&quot;&gt;&lt;a href=&quot;#Makefile-中-的区别&quot; class=&quot;headerlink&quot; title=&quot;Makefile 中:= ?= += =的区别&quot;&gt;&lt;/a&gt;Makefile 中:= ?= += =的区别&lt;/h2&gt;&lt;p&gt;在Mak
+      
+    
+    </summary>
+    
+      <category term="C/C++" scheme="hjx051013.github.io/categories/C-C/"/>
+    
+    
+      <category term="Makefile" scheme="hjx051013.github.io/tags/Makefile/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>极大似然估计</title>
+    <link href="hjx051013.github.io/2018/12/10/%E6%9E%81%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1/"/>
+    <id>hjx051013.github.io/2018/12/10/极大似然估计/</id>
+    <published>2018-12-10T11:32:01.000Z</published>
+    <updated>2018-12-10T11:32:01.507Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>手写数字识别</title>
