@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="hjx051013.github.io/"/>
-  <updated>2019-05-29T13:54:02.781Z</updated>
+  <updated>2019-07-05T04:01:28.568Z</updated>
   <id>hjx051013.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>进程间通信方式</title>
+    <link href="hjx051013.github.io/2019/07/05/%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F/"/>
+    <id>hjx051013.github.io/2019/07/05/进程间通信方式/</id>
+    <published>2019-07-05T03:42:50.000Z</published>
+    <updated>2019-07-05T04:01:28.568Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Unix-IPC机制总结"><a href="#Unix-IPC机制总结" class="headerlink" title="Unix IPC机制总结"></a>Unix IPC机制总结</h1><p>进程间通信(IPC, InterProcess Communication)是指在不同进程间传播或者交换信息</p><p>常见IPC的方式有管道、消息队列、信号量、共享存储、socket、Streams等，其中socket和streams支持不同主机上的两个进程进行通信。</p><h2 id="一、管道"><a href="#一、管道" class="headerlink" title="一、管道"></a>一、管道</h2><h3 id="1-匿名管道"><a href="#1-匿名管道" class="headerlink" title="1. 匿名管道"></a>1. 匿名管道</h3><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul><li>半双工，即数据只能在一个方向上流动，读写端固定</li><li>只能在具有亲缘关系的进程之间通信</li><li>可以看成是特殊的文件，有文件描述符，但只存在于内存中</li></ul><h4 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">int pipe(int fd[2])</span><br></pre></td></tr></table></figure><p><img src="http://ww3.sinaimg.cn/large/006tNc79gy1g4otttvk0uj30l60kqgms.jpg" alt="image-20190705115418630"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Unix-IPC机制总结&quot;&gt;&lt;a href=&quot;#Unix-IPC机制总结&quot; class=&quot;headerlink&quot; title=&quot;Unix IPC机制总结&quot;&gt;&lt;/a&gt;Unix IPC机制总结&lt;/h1&gt;&lt;p&gt;进程间通信(IPC, InterProcess Commun
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Makefile赋值符辨析.md</title>

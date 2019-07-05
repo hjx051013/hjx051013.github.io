@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[进程间通信方式]]></title>
+    <url>%2F2019%2F07%2F05%2F%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F%2F</url>
+    <content type="text"><![CDATA[Unix IPC机制总结进程间通信(IPC, InterProcess Communication)是指在不同进程间传播或者交换信息 常见IPC的方式有管道、消息队列、信号量、共享存储、socket、Streams等，其中socket和streams支持不同主机上的两个进程进行通信。 一、管道1. 匿名管道特点 半双工，即数据只能在一个方向上流动，读写端固定 只能在具有亲缘关系的进程之间通信 可以看成是特殊的文件，有文件描述符，但只存在于内存中 原型12#include &lt;unistd.h&gt;int pipe(int fd[2])]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[Makefile赋值符辨析.md]]></title>
     <url>%2F2019%2F05%2F29%2FMakefile%E8%B5%8B%E5%80%BC%E7%AC%A6%E8%BE%A8%E6%9E%90%2F</url>
     <content type="text"><![CDATA[Makefile 中:= ?= += =的区别在Makefile中我们经常看到 = := ?= +=这几个赋值运算符，那么他们有什么区别呢？我们来做个简单的实验 新建一个Makefile，内容为：12345678910111213141516171819ifdef DEFINE_VRE VRE = “Hello World!”elseendififeq ($(OPT),define) VRE ?= “Hello World! First!”endififeq ($(OPT),add) VRE += “Kelly!”endififeq ($(OPT),recover) VRE := “Hello World! Again!”endifall: @echo $(VRE) 敲入以下make命令： make DEFINE_VRE=true OPT=define 输出：Hello World!make DEFINE_VRE=true OPT=add 输出：Hello World! Kelly!make DEFINE_VRE=true OPT=recover 输出：Hello World! Again!make DEFINE_VRE= OPT=define 输出：Hello World! First!make DEFINE_VRE= OPT=add 输出：Kelly!make DEFINE_VRE= OPT=recover 输出：Hello World! Again! 从上面的结果中我们可以清楚的看到他们的区别了 = 是最基本的赋值 := 是覆盖之前的值 ?= 是如果没有被赋值过就赋予等号后面的值 += 是添加等号后面的值 之前一直纠结makefile中“=”和“:=”的区别到底有什么区别，因为给变量赋值时，两个符号都在使用。网上搜了一下，有人给出了解答，但是本人愚钝，看不懂什么意思。几寻无果之下，也就放下了。今天看一篇博客，无意中发现作者对于这个问题做了很好的解答。解决问题之余不免感叹，有时候给个例子不就清楚了吗？为什么非要说得那么学术呢。^_^ “=” make会将整个makefile展开后，再决定变量的值。也就是说，变量的值将会是整个makefile中最后被指定的值。看例子：123x = fooy = $(x) barx = xyz 在上例中，y的值将会是 xyz bar ，而不是 foo bar 。 “:=” “:=”表示变量的值决定于它在makefile中的位置，而不是整个makefile展开后的最终值。123x := fooy := $(x) barx := xyz 在上例中，y的值将会是 foo bar ，而不是 xyz bar了。]]></content>
