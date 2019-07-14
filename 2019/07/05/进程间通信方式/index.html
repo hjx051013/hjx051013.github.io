@@ -97,7 +97,8 @@
 <meta property="og:description" content="Unix IPC机制总结进程间通信(IPC, InterProcess Communication)是指在不同进程间传播或者交换信息 常见IPC的方式有管道、消息队列、信号量、共享存储、socket、Streams等，其中socket和streams支持不同主机上的两个进程进行通信。 一、管道1. 匿名管道特点 半双工，即数据只能在一个方向上流动，读写端固定 只能在具有亲缘关系的进程之间通信 可以">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006tNc79gy1g4otttvk0uj30l60kqgms.jpg">
-<meta property="og:updated_time" content="2019-07-05T04:01:28.568Z">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006tNc79gy1g4ou19bfkjj316k0h642a.jpg">
+<meta property="og:updated_time" content="2019-07-05T04:12:16.876Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="进程间通信方式">
 <meta name="twitter:description" content="Unix IPC机制总结进程间通信(IPC, InterProcess Communication)是指在不同进程间传播或者交换信息 常见IPC的方式有管道、消息队列、信号量、共享存储、socket、Streams等，其中socket和streams支持不同主机上的两个进程进行通信。 一、管道1. 匿名管道特点 半双工，即数据只能在一个方向上流动，读写端固定 只能在具有亲缘关系的进程之间通信 可以">
@@ -371,7 +372,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  157
+                  320
                 </span>
               
 
@@ -415,8 +416,13 @@
 <li>只能在具有亲缘关系的进程之间通信</li>
 <li>可以看成是特殊的文件，有文件描述符，但只存在于内存中</li>
 </ul>
-<h4 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">int pipe(int fd[2])</span><br></pre></td></tr></table></figure>
+<h4 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">pipe</span><span class="params">(<span class="keyword">int</span> fd[<span class="number">2</span>])</span></span></span><br></pre></td></tr></table></figure>
 <p><img src="http://ww3.sinaimg.cn/large/006tNc79gy1g4otttvk0uj30l60kqgms.jpg" alt="image-20190705115418630"></p>
+<p>要关闭管道只需要将这两个文件描述符关闭就行</p>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p>通常调用pipe的进程接着fork，这样就创建了父、子进程之间的IPC通道</p>
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79gy1g4ou19bfkjj316k0h642a.jpg" alt="image-20190705120627028"></p>
+<p>若要数据流从父进程流向子进程，则需要关闭父进程的读端(fd[0])和子进程的写端(fd[1])；反之，则可以使得数据熊子进程流向父进程</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> fd[<span class="number">2</span>];</span><br><span class="line">  <span class="keyword">pid_t</span> pid;</span><br><span class="line">  <span class="keyword">char</span> buf[<span class="number">20</span>];</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (pipe(fd) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"pipe error"</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ((pid = fork()) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    close(fd[<span class="number">0</span>]);</span><br><span class="line">    write(fd[<span class="number">1</span>], <span class="string">"hello world\n"</span>, <span class="built_in">strlen</span>(<span class="string">"hello world\n"</span>))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -450,6 +456,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/14/电梯运行模拟/" rel="prev" title="电梯运行模拟">
+                电梯运行模拟 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -528,7 +538,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -550,7 +560,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -612,7 +622,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Unix-IPC机制总结"><span class="nav-number">1.</span> <span class="nav-text">Unix IPC机制总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、管道"><span class="nav-number">1.1.</span> <span class="nav-text">一、管道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-匿名管道"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 匿名管道</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特点"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原型"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">原型</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Unix-IPC机制总结"><span class="nav-number">1.</span> <span class="nav-text">Unix IPC机制总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、管道"><span class="nav-number">1.1.</span> <span class="nav-text">一、管道</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-匿名管道"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 匿名管道</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#特点"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原型"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">原型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例子"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">例子</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -647,7 +657,7 @@
     
       <span class="post-meta-item-text">站点共计字数&#58;</span>
     
-    <span title="Site words total count">10.2k</span>
+    <span title="Site words total count">12.5k</span>
   
   
   
