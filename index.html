@@ -296,6 +296,771 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hjx051013.github.io/2019/09/06/redis配置项说明/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jiaxinhuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追风少年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/06/redis配置项说明/" itemprop="url">redis配置项说明</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-06T13:57:24+08:00">
+                2019-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/09/06/redis配置项说明/" class="leancloud_visitors" data-flag-title="redis配置项说明">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                <span>℃</span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>redis.conf 配置项说明如下：</p>
+<ol>
+<li><p>Redis默认不是以守护进程的方式运行，可以通过该配置项修改，使用yes启用守护进程</p>
+<p> daemonize no</p>
+</li>
+<li><p>当Redis以守护进程方式运行时，Redis默认会把pid写入/var/run/redis.pid文件，可以通过pidfile指定</p>
+<p> pidfile /var/run/redis.pid</p>
+</li>
+<li><p>指定Redis监听端口，默认端口为6379，作者在自己的一篇博文中解释了为什么选用6379作为默认端口，因为6379在手机按键上MERZ对应的号码，而MERZ取自意大利歌女Alessia Merz的名字</p>
+<p> port 6379</p>
+</li>
+<li><p>绑定的主机地址</p>
+<p> bind 127.0.0.1</p>
+</li>
+</ol>
+<p>5.当 客户端闲置多长时间后关闭连接，如果指定为0，表示关闭该功能  </p>
+<pre><code> timeout 300
+</code></pre><ol>
+<li><p>指定日志记录级别，Redis总共支持四个级别：debug、verbose、notice、warning，默认为verbose</p>
+<p> loglevel verbose</p>
+</li>
+<li><p>日志记录方式，默认为标准输出，如果配置Redis为守护进程方式运行，而这里又配置为日志记录方式为标准输出，则日志将会发送给/dev/null</p>
+<p> logfile stdout</p>
+</li>
+<li><p>设置数据库的数量，默认数据库为0，可以使用SELECT <dbid>命令在连接上指定数据库id</dbid></p>
+<p> databases 16</p>
+</li>
+<li><p>指定在多长时间内，有多少次更新操作，就将数据同步到数据文件，可以多个条件配合</p>
+<p> save <seconds> <changes></changes></seconds></p>
+<p> Redis默认配置文件中提供了三个条件：</p>
+<p> save 900 1</p>
+<p> save 300 10</p>
+<p> save 60 10000</p>
+<p> 分别表示900秒（15分钟）内有1个更改，300秒（5分钟）内有10个更改以及60秒内有10000个更改。</p>
+</li>
+</ol>
+<ol>
+<li><p>指定存储至本地数据库时是否压缩数据，默认为yes，Redis采用LZF压缩，如果为了节省CPU时间，可以关闭该选项，但会导致数据库文件变的巨大</p>
+<p>rdbcompression yes</p>
+</li>
+<li><p>指定本地数据库文件名，默认值为dump.rdb</p>
+<p>dbfilename dump.rdb</p>
+</li>
+<li><p>指定本地数据库存放目录</p>
+<p>dir ./</p>
+</li>
+<li><p>设置当本机为slav服务时，设置master服务的IP地址及端口，在Redis启动时，它会自动从master进行数据同步</p>
+<p>slaveof <masterip> <masterport></masterport></masterip></p>
+</li>
+<li><p>当master服务设置了密码保护时，slav服务连接master的密码</p>
+<p>masterauth <master-password></master-password></p>
+</li>
+<li><p>设置Redis连接密码，如果配置了连接密码，客户端在连接Redis时需要通过AUTH <password>命令提供密码，默认关闭</password></p>
+<p>requirepass foobared</p>
+</li>
+<li><p>设置同一时间最大客户端连接数，默认无限制，Redis可以同时打开的客户端连接数为Redis进程可以打开的最大文件描述符数，如果设置 maxclients 0，表示不作限制。当客户端连接数到达限制时，Redis会关闭新的连接并向客户端返回max number of clients reached错误信息</p>
+<p>maxclients 128</p>
+</li>
+<li><p>指定Redis最大内存限制，Redis在启动时会把数据加载到内存中，达到最大内存后，Redis会先尝试清除已到期或即将到期的Key，当此方法处理 后，仍然到达最大内存设置，将无法再进行写入操作，但仍然可以进行读取操作。Redis新的vm机制，会把Key存放内存，Value会存放在swap区</p>
+<p>maxmemory <bytes></bytes></p>
+</li>
+<li><p>指定是否在每次更新操作后进行日志记录，Redis在默认情况下是异步的把数据写入磁盘，如果不开启，可能会在断电时导致一段时间内的数据丢失。因为 redis本身同步数据文件是按上面save条件来同步的，所以有的数据会在一段时间内只存在于内存中。默认为no</p>
+<p>appendonly no</p>
+</li>
+<li><p>指定更新日志文件名，默认为appendonly.aof</p>
+<p> appendfilename appendonly.aof</p>
+</li>
+<li><p>指定更新日志条件，共有3个可选值：<br>no：表示等操作系统进行数据缓存同步到磁盘（快）<br>always：表示每次更新操作后手动调用fsync()将数据写到磁盘（慢，安全）<br>everysec：表示每秒同步一次（折衷，默认值）</p>
+<p>appendfsync everysec</p>
+</li>
+</ol>
+<ol>
+<li><p>指定是否启用虚拟内存机制，默认值为no，简单的介绍一下，VM机制将数据分页存放，由Redis将访问量较少的页即冷数据swap到磁盘上，访问多的页面由磁盘自动换出到内存中（在后面的文章我会仔细分析Redis的VM机制）</p>
+<p> vm-enabled no</p>
+</li>
+<li><p>虚拟内存文件路径，默认值为/tmp/redis.swap，不可多个Redis实例共享</p>
+<p> vm-swap-file /tmp/redis.swap</p>
+</li>
+<li><p>将所有大于vm-max-memory的数据存入虚拟内存,无论vm-max-memory设置多小,所有索引数据都是内存存储的(Redis的索引数据 就是keys),也就是说,当vm-max-memory设置为0的时候,其实是所有value都存在于磁盘。默认值为0</p>
+<p> vm-max-memory 0</p>
+</li>
+<li><p>Redis swap文件分成了很多的page，一个对象可以保存在多个page上面，但一个page上不能被多个对象共享，vm-page-size是要根据存储的 数据大小来设定的，作者建议如果存储很多小对象，page大小最好设置为32或者64bytes；如果存储很大大对象，则可以使用更大的page，如果不 确定，就使用默认值</p>
+<p> vm-page-size 32</p>
+</li>
+<li><p>设置swap文件中的page数量，由于页表（一种表示页面空闲或使用的bitmap）是在放在内存中的，，在磁盘上每8个pages将消耗1byte的内存。</p>
+<p> vm-pages 134217728</p>
+</li>
+<li><p>设置访问swap文件的线程数,最好不要超过机器的核数,如果设置为0,那么所有对swap文件的操作都是串行的，可能会造成比较长时间的延迟。默认值为4</p>
+<p> vm-max-threads 4</p>
+</li>
+<li><p>设置在向客户端应答时，是否把较小的包合并为一个包发送，默认为开启</p>
+<p>glueoutputbuf yes</p>
+</li>
+<li><p>指定在超过一定的数量或者最大的元素超过某一临界值时，采用一种特殊的哈希算法</p>
+<p>hash-max-zipmap-entries 64</p>
+<p>hash-max-zipmap-value 512</p>
+</li>
+<li><p>指定是否激活重置哈希，默认为开启（后面在介绍Redis的哈希算法时具体介绍）</p>
+<p>activerehashing yes</p>
+</li>
+<li><p>指定包含其它的配置文件，可以在同一主机上多个Redis实例之间使用同一份配置文件，而同时各个实例又拥有自己的特定配置文件</p>
+<p>include /path/to/local.conf</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hjx051013.github.io/2019/09/06/理解epoll/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jiaxinhuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追风少年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/06/理解epoll/" itemprop="url">理解epoll</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-06T13:55:09+08:00">
+                2019-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/IO多路复用/" itemprop="url" rel="index">
+                    <span itemprop="name">IO多路复用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/09/06/理解epoll/" class="leancloud_visitors" data-flag-title="理解epoll">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                <span>℃</span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>epoll模型是在单个线程中侦听多个套接字fd行为的一种IO多路复用模型。主要有<code>epoll_create</code>,<code>epoll_ctl</code>,<code>epoll_wait</code>三个接口。</p>
+<h3 id="一、epoll的使用"><a href="#一、epoll的使用" class="headerlink" title="一、epoll的使用"></a>一、epoll的使用</h3><h4 id="1-创建epoll句柄"><a href="#1-创建epoll句柄" class="headerlink" title="1. 创建epoll句柄"></a>1. 创建epoll句柄</h4><blockquote>
+<p> int epfd = epoll_create(intsize);<br>创建一个epoll的句柄，size用来告诉内核这个监听的数目一共有多大。size就是你在这个epoll fd上能关注的最大socket fd数。</p>
+</blockquote>
+<h4 id="2-将被监听的描述符添加到epoll句柄或从epool句柄中删除或者对监听事件进行修改。"><a href="#2-将被监听的描述符添加到epoll句柄或从epool句柄中删除或者对监听事件进行修改。" class="headerlink" title="2.将被监听的描述符添加到epoll句柄或从epool句柄中删除或者对监听事件进行修改。"></a>2.将被监听的描述符添加到epoll句柄或从epool句柄中删除或者对监听事件进行修改。</h4><blockquote>
+<p>int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event)<br>参数：<br>epfd：由 epoll_create 生成的epoll专用的文件描述符；<br>op：要进行的操作例如注册事件，可能的取值EPOLL_CTL_ADD 注册、EPOLL_CTL_MOD 修 改、EPOLL_CTL_DEL 删除<br>fd：关联的文件描述符；<br>event：指向epoll_event的指针；<br>如果调用成功返回0,不成功返回-1</p>
+</blockquote>
+<p>第一个参数是epoll_create()的返回值，<br>第二个参数表示动作，用三个宏来表示：</p>
+<ul>
+<li>EPOLL_CTL_ADD：       注册新的fd到epfd中；</li>
+<li>EPOLL_CTL_MOD：      修改已经注册的fd的监听事件；</li>
+<li>EPOLL_CTL_DEL：        从epfd中删除一个fd；<br>第三个参数是需要监听的fd，<br>第四个参数是告诉内核需要监听什么事件，structepoll_event结构如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">typedef union epoll_data &#123;</span><br><span class="line">void *ptr; //指向要附加的数据结构</span><br><span class="line">int fd;     //一般设为监视的fd</span><br><span class="line">__uint32_t u32;</span><br><span class="line">__uint64_t u64;</span><br><span class="line">&#125; epoll_data_t;</span><br><span class="line"></span><br><span class="line">struct epoll_event &#123;</span><br><span class="line">/* Epoll events</span><br><span class="line">events可以是以下几个宏的集合：</span><br><span class="line">         EPOLLIN：            触发该事件，表示对应的文件描述符上有可读数据。(包括对端SOCKET正常关闭)；</span><br><span class="line">         EPOLLOUT：         触发该事件，表示对应的文件描述符上可以写数据；</span><br><span class="line">        EPOLLPRI：           表示对应的文件描述符有紧急的数据可读（这里应该表示有带外数据到来）；</span><br><span class="line">        EPOLLERR：        表示对应的文件描述符发生错误；</span><br><span class="line">         EPOLLHUP：        表示对应的文件描述符被挂断；</span><br><span class="line">        EPOLLET：           将EPOLL设为边缘触发(Edge Triggered)模式，这是相对于水平触发(Level Triggered)来说的。</span><br><span class="line">        EPOLLONESHOT：  只监听一次事件，当监听完这次事件之后，如果还需要继续监听这个socket的话，需要再次把这个socket加入到EPOLL队列里。</span><br><span class="line"> */</span><br><span class="line">__uint32_t events; </span><br><span class="line">epoll_data_t data; /* User data variable */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如要监听服务端套接字的连接，listenfd对对应的socket套接字，之前已经bind和listen好。将它加入到epfd指定的epoll对象中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct epoll_event ev;</span><br><span class="line">//设置与要处理的事件相关的文件描述符</span><br><span class="line">ev.data.fd=listenfd;</span><br><span class="line">//设置要处理的事件类型</span><br><span class="line">ev.events=EPOLLIN|EPOLLET;</span><br><span class="line">//注册epoll事件</span><br><span class="line">epoll_ctl(epfd,EPOLL_CTL_ADD,listenfd,&amp;ev);</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-等待事件触发，当超过timeout还没有事件触发时，就超时。"><a href="#3-等待事件触发，当超过timeout还没有事件触发时，就超时。" class="headerlink" title="3.等待事件触发，当超过timeout还没有事件触发时，就超时。"></a>3.等待事件触发，当超过timeout还没有事件触发时，就超时。</h4><blockquote>
+<p>int epoll_wait(int epfd, struct epoll_event <em> events, intmaxevents, int timeout);<br>函数声明:int epoll_wait(int epfd,struct epoll_event </em> events,int maxevents,int timeout)<br>该函数用于轮询I/O事件的发生；参数：<br>epfd:由epoll_create 生成的epoll专用的文件描述符；<br>epoll_event:用于回传代处理事件的数组，已经分配好内存；<br>maxevents:每次能处理的最大事件数；<br>timeout:等待I/O事件发生的超时值(单位我也不太清楚)；-1相当于阻塞，0相当于非阻塞。一般用-1即可<br>返回发生事件数。</p>
+</blockquote>
+<h3 id="二、epoll的原理"><a href="#二、epoll的原理" class="headerlink" title="二、epoll的原理"></a>二、epoll的原理</h3><p>本节会以示例和图表来讲解epoll的原理和流程。</p>
+<h4 id="1-创建epoll对象"><a href="#1-创建epoll对象" class="headerlink" title="1.创建epoll对象"></a>1.创建epoll对象</h4><p>如下图所示，当某个进程调用epoll_create方法时，内核会创建一个eventpoll对象（也就是程序中epfd所代表的对象）。eventpoll对象也是文件系统中的一员，和socket一样，它也会有等待队列。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13261459-c3ee8c3e009c2283?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="内核创建eventpoll对象"></p>
+<p>创建一个代表该epoll的eventpoll对象是必须的，因为内核要维护“就绪列表”等数据，“就绪列表”可以作为eventpoll的成员。</p>
+<h4 id="2-维护监视列表"><a href="#2-维护监视列表" class="headerlink" title="2.维护监视列表"></a>2.维护监视列表</h4><p>创建epoll对象后，可以用epoll_ctl添加或删除所要监听的socket。以添加socket为例，如下图，如果通过epoll_ctl添加sock1、sock2和sock3的监视，内核会将eventpoll添加到这三个socket的等待队列中。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13261459-61511732224c16c5?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="添加所要监听的socket"><br>当socket收到数据后，中断程序会操作eventpoll对象，而不是直接操作进程。</p>
+<h4 id="3-接收数据"><a href="#3-接收数据" class="headerlink" title="3.接收数据"></a>3.接收数据</h4><p>当socket收到数据后，中断程序会给eventpoll的“就绪列表”添加socket引用。如下图展示的是sock2和sock3收到数据后，中断程序让rdlist引用这两个socket。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13261459-83c76dad3e65d683?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="给就绪列表添加引用"></p>
+<p>eventpoll对象相当于是socket和进程之间的中介，socket的数据接收并不直接影响进程，而是通过改变eventpoll的就绪列表来改变进程状态。</p>
+<p>当程序执行到epoll_wait时，如果rdlist已经引用了socket，那么epoll_wait直接返回，如果rdlist为空，阻塞进程。</p>
+<h4 id="4-阻塞和唤醒进程"><a href="#4-阻塞和唤醒进程" class="headerlink" title="4.阻塞和唤醒进程"></a>4.阻塞和唤醒进程</h4><p>假设计算机中正在运行进程A和进程B，在某时刻进程A运行到了epoll_wait语句。如下图所示，内核会将进程A放入eventpoll的等待队列中，阻塞进程。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13261459-f3c0cccf9a288894?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="epoll_wait阻塞进程"></p>
+<p>当socket接收到数据，中断程序一方面修改rdlist，另一方面唤醒eventpoll等待队列中的进程，进程A再次进入运行状态（如下图）。也因为rdlist的存在，进程A可以知道哪些socket发生了变化。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13261459-b87afc2b79e68b7f?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="epoll唤醒进程"></p>
+<h3 id="三、epoll的实现细节"><a href="#三、epoll的实现细节" class="headerlink" title="三、epoll的实现细节"></a>三、epoll的实现细节</h3><p>读完这篇文章，还有三个问题需要细究一下。</p>
+<ol>
+<li>eventpoll的数据结构是什么样子？</li>
+<li>就绪队列应该应使用什么数据结构？</li>
+<li>eventpoll应使用什么数据结构来管理通过epoll_ctl添加或删除的socket？</li>
+</ol>
+<hr>
+<p>如下图所示，eventpoll包含了lock、mtx、wq（等待队列）、rdlist等成员。rdlist和rbr是我们所关心的。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/13261459-7570f09a2a7a588f?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="epoll原理示意图"></p>
+<h4 id="1-就绪列表的数据结构"><a href="#1-就绪列表的数据结构" class="headerlink" title="1. 就绪列表的数据结构"></a>1. 就绪列表的数据结构</h4><ul>
+<li>就绪列表引用着就绪的socket，所以它应能够快速的插入数据。</li>
+<li>程序可能随时调用epoll_ctl添加监视socket，也可能随时删除。当删除时，若该socket已经存放在就绪列表中，它也应该被移除。</li>
+</ul>
+<p>所以就绪列表应是一种能够快速插入和删除的数据结构。双向链表就是这样一种数据结构，epoll使用双向链表来实现就绪队列（对应上图的rdllist）。</p>
+<h4 id="2-索引结构"><a href="#2-索引结构" class="headerlink" title="2.索引结构"></a>2.索引结构</h4><p>既然epoll将“维护监视队列”和“进程阻塞”分离，也意味着需要有个数据结构来保存监视的socket。至少要方便的添加和移除，还要便于搜索，以避免重复添加。红黑树是一种自平衡二叉查找树，搜索、插入和删除时间复杂度都是O(log(N))，效率较好。epoll使用了红黑树作为索引结构（对应上图的rbr），存储所监视的socket fd。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="hjx051013.github.io/2019/09/06/海量数据处理问题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="jiaxinhuang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="追风少年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/09/06/海量数据处理问题/" itemprop="url">海量数据处理问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-06T13:53:51+08:00">
+                2019-09-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/09/06/海量数据处理问题/" class="leancloud_visitors" data-flag-title="海量数据处理问题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+                <span>℃</span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.6k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="一、方法论"><a href="#一、方法论" class="headerlink" title="一、方法论"></a>一、方法论</h2><ol>
+<li>对于固定大小的海量数据，通常可以采用分文件+哈希统计+内存处理（堆/快速/归并排序）的方法。</li>
+</ol>
+<ul>
+<li>对于字符串数据，可以对字符串进行哈希，哈希值%n(n为分文件数量)，这样来说同一个字符串必然分配到一个文件当中，然后如果哈希均匀的话，就能够保证每个文件可以放入内存当中，在内存当中采用通用方法进行处理获得每个文件的结果，然后写到磁盘中，最后汇总或者直接在内存中汇总。</li>
+<li>对于数字，可以直接x%n（n为分文件数量）或者采用二进制前k位来分成2^k个文件块。</li>
+</ul>
+<ol>
+<li>Bloom filter(布隆过滤器)<ul>
+<li>判断一条记录在另一个记录集合中是否存在。具体操作时，对于记录集合S中的n条记录，设置m位的bitmap和k个独立hash函数，遍历S集合，对于每条记录，将其k个hash函数值对应位置1。要判断一条记录是否存在时，查看其k个hash函数值对应位是否都是1，如果是，就认为存在，否则就不存在。bloom filter对于有hash函数值为0的，那么就可以100%确定这条记录不存在，但是可能把不存在的误判成存在的。但是这样的概率很小。</li>
+<li>m应该&gt;=nlg(1/E)<em>lge 大概就是nlg(1/E)1.44倍，当hash函数个数k=(ln2)</em>(m/n)时错误率最小。</li>
+<li>Counting bloom filter（CBF）将位数组中的每一位扩展为一个counter，从而支持了元素的删除操作。counter可以记录hash值对应到该counter的次数</li>
+</ul>
+<ol>
+<li>bitmap</li>
+</ol>
+<ul>
+<li>对于uint32型的数据比较有用，uint32每个数字对应一位，最后会申请512M的内存。</li>
+</ul>
+<ol>
+<li>Trie树（前缀树）</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>适用范围：数据量大，重复多，但是数据种类小可以放入内存。</li>
+<li>基本原理及要点：实现方式，节点孩子的表示方式</li>
+<li>扩展：压缩实现。</li>
+</ul>
+<ol>
+<li>外排序<ul>
+<li>外部排序是针对海量数据无法放入内存中排序而产生的一种排序算法。基本算法是拆分成多个小文件，每个小文件可以放入内存当中，对于小文件进行排序后，再采用多路归并排序，也就是构造一个大小为文件块数的堆（升序就是小堆，降序就是最大堆），先分别从k个文件中读取一个数插入堆中，将堆顶元素写到文件中，然后从写出元素所在文件中再读入一个数，依次进行下去。</li>
+<li>适用范围：大数据的排序，去重<h2 id="面试问题："><a href="#面试问题：" class="headerlink" title="面试问题："></a>面试问题：</h2></li>
+</ul>
+<ol>
+<li>海量日志数据，提取出某日访问百度次数最多的那个IP。</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li>方法一:<ol>
+<li>分而治之/哈希映射：读取ip，划分成n个文件根据hashCode%n值，分划到相应的文件当中</li>
+<li>哈希统计：对于每个文件，可以读入内存，hashmap统计ip次数（注意一个ip只会出现在一个文件当中），然后通过排序或者遍历获得最大次数的ip。</li>
+<li>汇总：获得每个文件中出现次数最多的ip，进行堆排或者快排或者扫描，就可以获得出现次数最多的ip。</li>
+</ol>
+</li>
+<li>方法二：<br>  trie树，用第k叉表示ip的一部分（ip可以分为四部分）。叶结点值可以存放ip次数。<ol>
+<li>寻找热门查询，300万个查询字符串中统计最热门的10个查询<br>300万个字符串如果可以放进内存存储为hashmap，那么就不用分而治之/哈希映射了。<br>哈希统计：hashmap统计每个字符串出现次数<br>堆排序：简历大小为10的小顶堆，堆元素为键值对，键为字符串，值为字符串出现次数，遍历hasmap或者读入文件流，遇到键值对的值大于堆顶元素值，就插入堆，并且删除堆顶键值对。遍历完毕后就可以获得top k查询结果。<br>trie树加大小为10的最小堆的方法也能够解决</li>
+<li>在10G数据中，数据类型为uint32，内存1G，寻找其中重复出现的数字<br>方法一、分而治之/哈希映射：根据uint32前4位将数据分成2^4个文件块<br>哈希统计：hashmap统计每个文件块中重复出现的数字<br>汇总：将每个文件快重复出现的数字直接并起来<br>方法二、 bitmap<br>uint32为2^32次方，对于每个数用一个bit记录是否出现，如果出现，就置该bit为1，如果发现该bit位已经为1，那么就直接将该数写到文件中，说明已经出现过。这种方法效率很高，但是如果可用内存更小或者改成uint64，那么就不行了。</li>
+<li>海量数据分布在100台电脑中，想个办法高效统计出这批数据的TOP10。</li>
+</ol>
+<ul>
+<li>如果每个数据只在一台电脑上出现，那么求出每台电脑的TOP10，再进行汇总。</li>
+<li>遍历一遍所有数据，重新hash取摸，如此使得同一个元素只出现在单独的一台电脑中，然后采用上面所说的方法，统计每台电脑中各个元素的出现次数找出TOP10，继而组合100台电脑上的TOP10，找出最终的TOP10。</li>
+<li>或者，暴力求解：直接统计统计每台电脑中各个元素的出现次数，然后把同一个元素在不同机器中的出现次数相加，最终从所有数据中找出TOP10。</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>给定a、b两个文件，各存放50亿个url，每个url各占64字节，内存限制是4G，让你找出a、b文件共同的url？<br>将a,b两个文件中的url经哈希分散到a[1000]个子文件中和b[1000]子文件中后，文件$a_i$与$b_i$放入内存取交集即可。</li>
+<li>怎么在海量数据中找出重复次数最多的一个？<br>先做hash，然后求模映射为小文件，求出每个小文件中重复次数最多的一个,然后求所有文件中最大的重复次数。<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2>对于固定大小的海量数据，通用做法就是分文件hash+内存处理（堆/快速/归并排序）+汇总方法解决。可以一次性放进内存中处理的做法有bitmap，trie树。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="hjx051013.github.io/2019/09/06/批量迁移markdown文件图片到云存储中/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -337,6 +1102,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -541,6 +1328,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/短发/" itemprop="url" rel="index">
+                    <span itemprop="name">短发</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -714,6 +1523,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1096,6 +1927,28 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1728,669 +2581,13 @@ You will propably like this person in small doses
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hjx051013.github.io/2018/11/29/python-help/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jiaxinhuang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追风少年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/29/python-help/" itemprop="url">python在命令行下查看模块，函数的用法</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-29T23:07:06+08:00">
-                2018-11-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/11/29/python-help/" class="leancloud_visitors" data-flag-title="python在命令行下查看模块，函数的用法">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-                <span>℃</span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  923
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>python的一个优势是有着大量自带和在线的模块(module)资源，可以提供丰富的功能，在使用这些模块的时候，如果每次都去网站找在线文档会过于耗费时间，结果也不一定准确。因此这里介绍下python自带的查看帮助功能，可以在编程时不中断地迅速找到所需模块和函数的使用方法。</p>
-<h3 id="通用帮助函数help"><a href="#通用帮助函数help" class="headerlink" title="通用帮助函数help()"></a>通用帮助函数help()</h3><p>在python命令行中键入help(),可以看到：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; help()</span><br><span class="line"></span><br><span class="line">Welcome to Python 3.5&apos;s help utility!</span><br><span class="line"></span><br><span class="line">If this is your first time using Python, you should definitely check out</span><br><span class="line">the tutorial on the Internet at http://docs.python.org/3.5/tutorial/.</span><br><span class="line"></span><br><span class="line">Enter the name of any module, keyword, or topic to get help on writing</span><br><span class="line">Python programs and using Python modules.  To quit this help utility and</span><br><span class="line">return to the interpreter, just type &quot;quit&quot;.</span><br><span class="line"></span><br><span class="line">To get a list of available modules, keywords, symbols, or topics, type</span><br><span class="line">&quot;modules&quot;, &quot;keywords&quot;, &quot;symbols&quot;, or &quot;topics&quot;.  Each module also comes</span><br><span class="line">with a one-line summary of what it does; to list the modules whose name</span><br><span class="line">or summary contain a given string such as &quot;spam&quot;, type &quot;modules spam&quot;.</span><br><span class="line"></span><br><span class="line">help&gt;</span><br></pre></td></tr></table></figure></p>
-<p>进入help帮助文档界面，根据屏幕提示可以继续键入相应关键词进行查询，继续键入modules可以列出当前所有安装的模块：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">help&gt; modules</span><br><span class="line"></span><br><span class="line">Please wait a moment while I gather a list of all available modules...</span><br><span class="line"></span><br><span class="line">AutoComplete        _pyio               filecmp             pyscreeze</span><br><span class="line">AutoCompleteWindow  _random             fileinput           pytweening</span><br><span class="line">......        </span><br><span class="line"></span><br><span class="line">Enter any module name to get more help.  Or, type &quot;modules spam&quot; to search</span><br><span class="line">for modules whose name or summary contain the string &quot;spam&quot;.</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>可以继续键入相应的模块名称得到该模块的帮助信息。<br>这是python的通用的查询帮助，可以查到几乎所有的帮助文档，但我们很多时候不需要这样层级式地向下查询，接下来会介绍如何直接查询特定的模块和函数帮助信息。</p>
-</blockquote>
-<h3 id="模块帮助查询"><a href="#模块帮助查询" class="headerlink" title="模块帮助查询"></a>模块帮助查询</h3><h4 id="查看-py结尾的普通模块help-module-name"><a href="#查看-py结尾的普通模块help-module-name" class="headerlink" title="查看.py结尾的普通模块help(module_name)"></a>查看.py结尾的普通模块help(module_name)</h4><p>例如要查询math模块的使用方法，可以如下操作：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import math</span><br><span class="line">&gt;&gt;&gt; help(math)</span><br><span class="line">Help on built-in module math:</span><br><span class="line"></span><br><span class="line">NAME</span><br><span class="line">    math</span><br><span class="line"></span><br><span class="line">DESCRIPTION</span><br><span class="line">    This module is always available.  It provides access to the</span><br><span class="line">    mathematical functions defined by the C standard.</span><br><span class="line"></span><br><span class="line">FUNCTIONS</span><br><span class="line">    acos(...)</span><br><span class="line">        acos(x)</span><br><span class="line"></span><br><span class="line">        Return the arc cosine (measured in radians) of x.</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>使用help(module_name)时首先需要import该模块，有些教程中不进行导入而在模块名中加入引号help(‘module_name’)，这种方法可能会带来问题，大家可以用math模块测试，建议使用先导入再使用help()函数查询。</p>
-<h4 id="查看内建模块sys-bultin-modulenames"><a href="#查看内建模块sys-bultin-modulenames" class="headerlink" title="查看内建模块sys.bultin_modulenames"></a>查看内建模块sys.bultin_modulenames</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.builtin_module_names</span><br><span class="line">(&apos;_ast&apos;, &apos;_bisect&apos;, &apos;_codecs&apos;, &apos;_codecs_cn&apos;, &apos;_codecs_hk&apos;, ... &apos;zlib&apos;)</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
-<p>需要导入sys模块。这里列举的一般是自带的使用C/C++编译链接的模块</p>
-</blockquote>
-<h3 id="查询函数信息"><a href="#查询函数信息" class="headerlink" title="查询函数信息"></a>查询函数信息</h3><h4 id="查看模块下所有函数dir-module-name"><a href="#查看模块下所有函数dir-module-name" class="headerlink" title="查看模块下所有函数dir(module_name)"></a>查看模块下所有函数dir(module_name)</h4><p>如我们需要列举出math模块下所有的函数名称<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; dir(math)</span><br><span class="line">[&apos;__doc__&apos;, &apos;__loader__&apos;, &apos;__name__&apos;,...]</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>同样需要首先导入该模块</p>
-<h4 id="查看模块下特定函数信息help-module-name-func-name"><a href="#查看模块下特定函数信息help-module-name-func-name" class="headerlink" title="查看模块下特定函数信息help(module_name.func_name)"></a>查看模块下特定函数信息help(module_name.func_name)</h4><p>如查看math下的sin()函数</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; help(math.sin)</span><br><span class="line">Help on built-in function sin in module math:</span><br><span class="line"></span><br><span class="line">sin(...)</span><br><span class="line">    sin(x)</span><br><span class="line"></span><br><span class="line">    Return the sine of x (measured in radians).</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
-<h4 id="查看函数信息的另一种方法print-func-name-doc"><a href="#查看函数信息的另一种方法print-func-name-doc" class="headerlink" title="查看函数信息的另一种方法print(func_name.doc)"></a>查看函数信息的另一种方法print(func_name.<strong>doc</strong>)</h4><p>如查看内建函数print用法。既可以用来查看内建函数，也可以查看模块函数信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; print(print.__doc__)</span><br><span class="line">print(value, ..., sep=&apos; &apos;, end=&apos;\n&apos;, file=sys.stdout, flush=False)</span><br><span class="line"></span><br><span class="line">Prints the values to a stream, or to sys.stdout by default.</span><br><span class="line">...</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>doc</strong>前后是两个短下划线，在python中会合并为长下划线<br>python中的help()类似unix中的man指令，熟悉后会对我们的编程带来很大帮助</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hjx051013.github.io/2018/11/29/python-lambda/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jiaxinhuang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追风少年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/29/python-lambda/" itemprop="url">python中的lambda表达式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-29T22:29:38+08:00">
-                2018-11-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/11/29/python-lambda/" class="leancloud_visitors" data-flag-title="python中的lambda表达式">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-                <span>℃</span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里，我们通过阅读各方资料，总结了关于Python中的lambda的“一个语法，三个特性，四个用法”。</p>
-<h3 id="一个语法"><a href="#一个语法" class="headerlink" title="一个语法"></a>一个语法</h3><p>在Python中，lambda的语法是唯一的。其形式如下：</p>
-<blockquote>
-<p>lambda argument_list: expression</p>
-</blockquote>
-<p>其中，lambda是Python预留的关键字，argument_list和expression由用户自定义。具体介绍如下。<br>这里的argument_list是参数列表。它的结构与Python中函数(function)的参数列表是一样的。具体来说，argument_list可以有非常多的形式。例如：</p>
-<ul>
-<li>a, b</li>
-<li>a=1, b=2</li>
-<li>*args</li>
-<li>**kwargs</li>
-<li>a, b=1, *args</li>
-<li>空</li>
-<li>……</li>
-</ul>
-<p>这里的expression是一个关于参数的表达式。表达式中出现的参数需要在argument_list中有定义，并且表达式只能是单行的。以下都是合法的表达式：</p>
-<ul>
-<li>1</li>
-<li>None</li>
-<li>a + b</li>
-<li>sum(a)</li>
-<li>1 if a &gt;10 else 0</li>
-<li>……</li>
-</ul>
-<p>这里的<code>lambda argument_list: expression</code>表示的是一个函数。这个函数叫做lambda函数。</p>
-<h3 id="三个特性"><a href="#三个特性" class="headerlink" title="三个特性"></a>三个特性</h3><p>lambda函数有如下特性：</p>
-<ul>
-<li>lambda函数是匿名的：所谓匿名函数，通俗地说就是没有名字的函数。lambda函数没有名字。</li>
-<li>lambda函数有输入和输出：输入是传入到参数列表argument_list的值，输出是根据表达式expression计算得到的值。</li>
-<li>lambda函数一般功能简单：单行expression决定了lambda函数不可能完成复杂的逻辑，只能完成非常简单的功能。由于其实现的功能一目了然，甚至不需要专门的名字来说明。</li>
-</ul>
-<p>下面是一些lambda函数示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">lambda x, y: x*y；函数输入是x和y，输出是它们的积x*y</span><br><span class="line"></span><br><span class="line">lambda:None；函数没有输入参数，输出是None</span><br><span class="line"></span><br><span class="line">lambda *args: sum(args); 输入是任意个数的参数，输出是它们的和(隐性要求是输入参数必须能够进行加法运算)</span><br><span class="line"></span><br><span class="line">lambda **kwargs: 1；输入是任意键值对参数，输出是1</span><br></pre></td></tr></table></figure></p>
-<h3 id="四个用法"><a href="#四个用法" class="headerlink" title="四个用法"></a>四个用法</h3><p>由于lambda语法是固定的，其本质上只有一种用法，那就是定义一个lambda函数。在实际中，根据这个lambda函数应用场景的不同，可以将lambda函数的用法扩展为以下几种：</p>
-<ol>
-<li>将lambda函数赋值给一个变量，通过这个变量间接调用该lambda函数。例如，执行语句<code>add=lambda x, y: x+y</code>，定义了加法函数<code>lambda x, y: x+y</code>，并将其赋值给变量add，这样变量add便成为具有加法功能的函数。例如，执行add(1,2)，输出为3。</li>
-<li>将lambda函数赋值给其他函数，从而将其他函数用该lambda函数替换。例如，为了把标准库time中的函数sleep的功能屏蔽(Mock)，我们可以在程序初始化时调用：<code>time.sleep=lambda x:None</code>。这样，在后续代码中调用time库的sleep函数将不会执行原有的功能。例如，执行<code>time.sleep(3)</code>时，程序不会休眠3秒钟，而是什么都不做。</li>
-<li>将lambda函数作为其他函数的返回值，返回给调用者。函数的返回值也可以是函数。例如<code>return lambda x, y: x+y</code>返回一个加法函数。这时，lambda函数实际上是定义在某个函数内部的函数，称之为嵌套函数，或者内部函数。对应的，将包含嵌套函数的函数称之为外部函数。内部函数能够访问外部函数的局部变量，这个特性是闭包(Closure)编程的基础，在这里我们不展开。</li>
-<li>将lambda函数作为参数传递给其他函数。<ul>
-<li>部分Python内置函数接收函数作为参数。典型的此类内置函数有这些。filter函数。此时lambda函数用于指定过滤列表元素的条件。例如<code>filter(lambda x: x % 3 == 0, [1, 2, 3])</code>指定将列表[1,2,3]中能够被3整除的元素过滤出来，其结果是[3]。</li>
-<li>sorted函数。此时lambda函数用于指定对列表中所有元素进行排序的准则。例如<code>sorted([1, 2, 3, 4, 5, 6, 7, 8, 9], key=lambda x: abs(5-x))</code>将列表[1, 2, 3, 4, 5, 6, 7, 8, 9]按照元素与5距离从小到大进行排序，其结果是[5, 4, 6, 3, 7, 2, 8, 1, 9]。</li>
-<li>map函数。此时lambda函数用于指定对列表中每一个元素的共同操作。例如<code>map(lambda x: x+1, [1, 2,3])</code>将列表[1, 2, 3]中的元素分别加1，其结果[2, 3, 4]。</li>
-<li>reduce函数。此时lambda函数用于指定列表中两两相邻元素的结合条件。例如<code>reduce(lambda a, b: &#39;{}, {}&#39;.format(a, b), [1, 2, 3, 4, 5, 6, 7, 8, 9])</code>将列表 [1, 2, 3, 4, 5, 6, 7, 8, 9]中的元素从左往右两两以逗号分隔的字符的形式依次结合起来，其结果是’1, 2, 3, 4, 5, 6, 7, 8, 9’。</li>
-<li>另外，部分Python库函数也接收函数作为参数，例如gevent的spawn函数。此时，lambda函数也能够作为参数传入。</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="hjx051013.github.io/2018/11/28/post/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="jiaxinhuang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="追风少年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/28/post/" itemprop="url">线性代数行列式总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-28T11:24:25+08:00">
-                2018-11-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/11/28/post/" class="leancloud_visitors" data-flag-title="线性代数行列式总结">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-                <span>℃</span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.2k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近入坑机器学习，线性代数的知识用到很多，所以就回顾了一下，发现也是挺有意思的。<br>行列式对于方阵给出一个特殊的定义值，与方阵的秩和方阵对应的齐次线性方程有没有唯一非零解有着很大的关系。</p>
-<h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>当$n\geq2$时，$n\times n$矩阵$A=\begin{bmatrix}a_{ij}\end{bmatrix}$的行列式是形如$\pm a_{ij} detA_{ij}$的n个项的和，其中加减号交替出现，这里的$a_{11},a_{12},a_{13}…a_{1n}$来自于第一行，即</p>
-<script type="math/tex; mode=display">\begin{aligned}
-detA&=a_{11}\cdot detA_{11}-a_{12}\cdot detA_{12}+\cdots +(-1)^{1+n}a_{1n}detA_{1n}\\
-&=\sum_{j=1}^{n}(-1)^{1+j}a_{1j}detA_{1j}\\
-\end{aligned}</script><p>当然这是针对第一行展开的，从中可以看出$n\times n$阶的行列式被展开成若干个$(n-1)\times(n-1)$阶的行列式。$detA_{1j}$称为代数余子式，是划掉行列式A的第$1$行第$j$列后余下行列式的值，也可以对第$i$行进行展开，$1$替换成$i$即可。同样地，也可以对某一列进行展开。</p>
-<h4 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h4><ol>
-<li>若$A$为三角阵，则$detA$为主对角线上元素乘积。这里的三角阵仅考虑行列式主对角线上边或下边元素全为零的情况。</li>
-<li><p>行变换性质。令$A$是一个方阵，则有</p>
-<ul>
-<li>若$A$的一行加上另一行的倍数得到$B$，则$detA=detB$ </li>
-<li>若$A$的两行互换得到$B$，则$detA=-detB$</li>
-<li>若$A$的某行乘以k得到$B$，则$detA=kdetB$</li>
-<li>$A$中有任何一行为0，则$detA=0$</li>
-</ul>
-<p>实际上，列变换也具有这些性质<br>通过行列式的行变换，可以将一个复杂的行列式化简成三角型，如果化成阶梯型后不是三角型，则说明行列式值为0。</p>
-<ol>
-<li>当且仅当$detA\neq 0$时方阵$A$是可逆的</li>
-<li>若$A$为一个$n\times n$矩阵，则$detA^T=detA$</li>
-<li>乘法性质。$det(AB)=(detA)(detB)$</li>
-</ol>
-</li>
-</ol>
-<h4 id="线性方程组的解集问题"><a href="#线性方程组的解集问题" class="headerlink" title="线性方程组的解集问题"></a>线性方程组的解集问题</h4><ul>
-<li>齐次线性方程组的解集<ul>
-<li>首先说一下什么是齐次线性方程组。就是方程组可以写成$A\textbf x=\textbf 0$，$A$是系数矩阵($m\times n$阶)，$\textbf x$是未知数n维列向量。显然这个方程必然有零解($x_1=0,x_2=0\cdots x_n=0$)。</li>
-<li>有没有非零解，取决于方程组有没有自由变量。如果系数矩阵的行秩$\geq$未知数个数n（事实上只能$=$，因为任何矩阵行秩$=$列秩$=$秩），也就是线性无关的有效方程的个数$=$未知数个数n，方程只有零解。如果小于，则$n-$行秩就是方程组自有变量的个数。如果$x_1,x_2$是自有变量的话，那么通解为$\textbf x=x_1\textbf u+x_2\textbf v$，$\textbf u,\textbf v$为由方程解出来的列向量。</li>
-</ul>
-</li>
-<li>非齐次线性方程的解集<ul>
-<li>非齐次线性方程组是为$A\textbf x=\textbf b$的形式，$\textbf b$为n维非$0$列向量。它的解有三种情况，由增广矩阵<br>$\begin{bmatrix}A&amp;\textbf b\end{bmatrix}$与系数矩阵$A$的秩的关系决定。若$r_{系数矩阵}=r_{增广矩阵}=n$，则有唯一解；若$r_{系数矩阵}=r_{增广矩阵}&lt;n$,则有无穷解。若$r_{系数矩阵}\neq r_{增广矩阵}$，则无解。（其中n为未知数的个数）。$r_{系数矩阵}\neq r_{增广矩阵}$反映了给定的线性方程组有互相矛盾的情况，其差为矛盾线性方程的个数；若$r_{系数矩阵}=r_{增广矩阵}&lt;n$，则说明给定的线性无关方程的个数小于未知变量个数，自然会有无穷多个解。<ul>
-<li>如果非齐次线性方程组有解，且p是一个特解，则$A\textbf x=\textbf b$的解集所有形如$\textbf w=\textbf p+\textbf v_{h}$，其中$\textbf v_{h}$是齐次线性方程组$A\textbf x=\textbf 0$的通解。<h4 id="克拉默法则"><a href="#克拉默法则" class="headerlink" title="克拉默法则"></a>克拉默法则</h4>克拉默法则是用来求解系数矩阵为方阵且可逆的非齐次线性方程组的唯一解的定理。首先定义一个替换矩阵，对于任意$n\times n$矩阵$A$和任意$\mathbb{R^{n}}$中向量$\textbf b$，令${A_i(b)}$表示$A$中第i列由向量$b$替换得到的矩阵。即</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<script type="math/tex; mode=display">{A_i(b)=}\begin{bmatrix} {a_1}& \cdots &{b}  &\cdots  &{a_n} \end{bmatrix}</script><p>接下来正式说明一下什么是克拉默法则<br>设$ A$是一个可逆的$n\times n$矩阵，对任意$\mathbb{R^{n}}$中向量$ b$，方程${Ax=b}$的唯一解可由下式给出，</p>
-<script type="math/tex; mode=display">{x_i=\frac{detA_ib}{detA},i=1,2\cdots n}</script><p>$detA\neq 0$再加上$n\times n$方阵的条件可以说明$r_{系数矩阵}=r_{增广矩阵}=n$</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2436,7 +2633,7 @@ detA&=a_{11}\cdot detA_{11}-a_{12}\cdot detA_{12}+\cdots +(-1)^{1+n}a_{1n}detA_{
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2447,7 +2644,7 @@ detA&=a_{11}\cdot detA_{11}-a_{12}\cdot detA_{12}+\cdots +(-1)^{1+n}a_{1n}detA_{
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2458,7 +2655,7 @@ detA&=a_{11}\cdot detA_{11}-a_{12}\cdot detA_{12}+\cdots +(-1)^{1+n}a_{1n}detA_{
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2539,7 +2736,7 @@ detA&=a_{11}\cdot detA_{11}-a_{12}\cdot detA_{12}+\cdots +(-1)^{1+n}a_{1n}detA_{
     
       <span class="post-meta-item-text">站点共计字数&#58;</span>
     
-    <span title="Site words total count">15.2k</span>
+    <span title="Site words total count">20.1k</span>
   
   
   
